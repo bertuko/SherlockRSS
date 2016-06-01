@@ -2,31 +2,41 @@ package com.albertbaron.sherlockrss.helpers
 
 import com.albertbaron.sherlockrss.models.*
 import com.einmalfel.earl.*
+import org.jetbrains.anko.async
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.*
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 
 class FeedHelper  {
+    private val poolTimeOut: Long = 10
+    private val poolTimeUnit: TimeUnit = TimeUnit.SECONDS
 
     fun getSingleFeed(link: String): ArticleList? {
-        val inStr = getFeedXML(link)
-        if (inStr != null) {
-            return getFeedFromStream(inStr)
+        var al: ArticleList? = null
+        val pool = Executors.newFixedThreadPool(1)
+        async(pool) {
+            val result = getFeedXML(link)
+            if (result != null) al = getFeedFromStream(result)
         }
-        return null
+        pool.shutdown()
+        pool.awaitTermination(poolTimeOut, poolTimeUnit)
+        return al
     }
 
     fun getAllFeeds(links: ArrayList<feed>): ArrayList<ArticleList> {
-        val inStr: ArrayList<InputStream> = ArrayList<InputStream>(links.count())
-        links.forEach { i ->
-            val result = getFeedXML(i.feedUrl)
-            if (result != null) inStr.add(result)
-        }
         val lArticleList : ArrayList<ArticleList> = ArrayList<ArticleList>(links.count())
-        inStr.forEach { i ->
-            lArticleList.add(getFeedFromStream(i))
+        val pool = Executors.newFixedThreadPool(links.count())
+        for (url in links) {
+            async(pool) {
+                val result = getFeedXML(url.feedUrl)
+                if (result != null) lArticleList.add(getFeedFromStream(result))
+            }
         }
+        pool.shutdown()
+        pool.awaitTermination(poolTimeOut, poolTimeUnit)
         return lArticleList
     }
 

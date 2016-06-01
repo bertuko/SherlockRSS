@@ -18,32 +18,23 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         //val ui = MainActivityUI()
         //ui.setContentView(this)
         setContentView(R.layout.activity_main)
         val mProgress : ProgressBar = findViewById(R.id.progressBar) as ProgressBar
         mProgress.visibility = View.INVISIBLE
-        val feeds: ArrayList<feed> = getFeedList()
-
         val f: FeedHelper = FeedHelper()
-        async() {
-            mProgress.visibility = View.VISIBLE
-            val al: ArrayList<ArticleList> = f.getAllFeeds(feeds)
-            uiThread {
-                mProgress.visibility = View.INVISIBLE
-                longToast("feeds updated")
-                //val mListView: RecyclerView = ui.holder!!.feedView
-                val mListView: RecyclerView =  findViewById(R.id.feedList) as RecyclerView
-                mListView.adapter = FeedListAdapter(al, R.layout.feed_list)
-                mListView.setHasFixedSize(true);
-                mListView.layoutManager = LinearLayoutManager(baseContext, LinearLayoutManager.VERTICAL, false)
-                mListView.itemAnimator = DefaultItemAnimator()
-            }
-        }
-        //database.use {
-        // }
+        fillMainActivity(f.getAllFeeds(getFeedList()))
+    }
 
+    fun fillMainActivity (al: ArrayList<ArticleList>) {
+        longToast("feeds updated")
+        //val mListView: RecyclerView = ui.holder!!.feedView
+        val mListView: RecyclerView =  findViewById(R.id.feedList) as RecyclerView
+        mListView.adapter = FeedListAdapter(al, R.layout.feed_list)
+        mListView.setHasFixedSize(true);
+        mListView.layoutManager = LinearLayoutManager(baseContext, LinearLayoutManager.VERTICAL, false)
+        mListView.itemAnimator = DefaultItemAnimator()
     }
 
     fun getFeedList(): ArrayList<feed> {
@@ -61,7 +52,5 @@ class MainActivity : AppCompatActivity() {
         feeds.add(feed("genbetadev", "http://www.genbetadev.com/index.xml"))
         return feeds
     }
-
-
 
 }
