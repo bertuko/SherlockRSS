@@ -1,7 +1,7 @@
 package com.albertbaron.sherlockrss.layouts
 
 import android.support.v7.widget.RecyclerView
-import com.albertbaron.sherlockrss.MainActivity
+import com.albertbaron.sherlockrss.activities.MainActivity
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 

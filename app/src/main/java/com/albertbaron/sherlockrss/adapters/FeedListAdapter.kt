@@ -8,11 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-
+import com.albertbaron.sherlockrss.activities.ArticleActivity
 import com.albertbaron.sherlockrss.R
+import com.albertbaron.sherlockrss.models.Article
 import com.albertbaron.sherlockrss.models.ArticleList
-
-import java.util.ArrayList
+import java.util.*
+import org.jetbrains.anko.*
 
 class FeedListAdapter(private val items: ArrayList<ArticleList>, private val itemLayout: Int) : RecyclerView.Adapter<FeedListAdapter.ViewHolder>() {
 
@@ -27,7 +28,9 @@ class FeedListAdapter(private val items: ArrayList<ArticleList>, private val ite
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
         holder.feedTitle.text = item.Title
-        holder.articleList.adapter = ArticleListAdapter(item.Articles, R.layout.article_list)
+        val adapt: ArticleListAdapter = ArticleListAdapter(item.Articles, R.layout.article_list)
+        adapt.setOnItemClickListener(ClickListenerImpl())
+        holder.articleList.adapter = adapt
         holder.articleList.setHasFixedSize(true);
         holder.articleList.layoutManager = LinearLayoutManager(pContext, LinearLayoutManager.HORIZONTAL, false)
         holder.articleList.itemAnimator = DefaultItemAnimator()
@@ -41,6 +44,26 @@ class FeedListAdapter(private val items: ArrayList<ArticleList>, private val ite
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var feedTitle: TextView = itemView.findViewById(R.id.feedTitle) as TextView
         var articleList: RecyclerView = itemView.findViewById(R.id.articleList) as RecyclerView
+    }
+
+    class ClickListenerImpl : ArticleListAdapter.ClickListener {
+
+        override fun onItemClick(position: Int, v: View) {
+            val item = v.tag as Article
+            v.context.startActivity<ArticleActivity>(
+                    "Title" to item.Title,
+                    "Author" to item.Author,
+                    "Description" to item.Description,
+                    "Link" to item.Link,
+                    "ImageLink" to item.ImageLink //,
+                    //"Title" to item.publicationDate?.time
+            )
+        }
+
+        override fun onItemLongClick(position: Int, v: View) {
+            //val item = v.tag as Article
+            //v.context.startActivity<ArticleActivity>("Article" to item)
+        }
     }
 
 }
