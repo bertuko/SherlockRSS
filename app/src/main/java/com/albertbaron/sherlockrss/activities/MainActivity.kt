@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.*
 import android.view.View
+import android.widget.ProgressBar
 import com.albertbaron.sherlockrss.R
 import com.albertbaron.sherlockrss.adapters.FeedListAdapter
 import com.albertbaron.sherlockrss.helpers.FeedHelper
@@ -21,13 +22,16 @@ class MainActivity : AppCompatActivity() {
         //val ui = MainActivityUI()
         //ui.setContentView(this)
         setContentView(R.layout.activity_main)
-
+        val mProgress : ProgressBar = findViewById(R.id.progressBar) as ProgressBar
+        mProgress.visibility = View.INVISIBLE
         val feeds: ArrayList<feed> = getFeedList()
 
         val f: FeedHelper = FeedHelper()
         async() {
+            mProgress.visibility = View.VISIBLE
             val al: ArrayList<ArticleList> = f.getAllFeeds(feeds)
             uiThread {
+                mProgress.visibility = View.INVISIBLE
                 longToast("feeds updated")
                 //val mListView: RecyclerView = ui.holder!!.feedView
                 val mListView: RecyclerView =  findViewById(R.id.feedList) as RecyclerView
@@ -37,7 +41,6 @@ class MainActivity : AppCompatActivity() {
                 mListView.itemAnimator = DefaultItemAnimator()
             }
         }
-
         //database.use {
         // }
 
