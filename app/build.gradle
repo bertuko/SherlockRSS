@@ -1,5 +1,20 @@
+buildscript {
+    ext.kotlin_version = '1.0.2'
+    ext.anko_version = '0.8.3'
+    ext.dbflow_version = '3.0.1'
+
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 23
@@ -25,25 +40,32 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
+    //testCompile 'junit:junit:4.12'
+    // Android Support Libraries
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:recyclerview-v7:23.4.0'
     compile 'com.android.support:cardview-v7:23.4.0'
+    // Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    // Anko
     compile "org.jetbrains.anko:anko-sdk19:$anko_version"
     compile "org.jetbrains.anko:anko-support-v4:$anko_version"
     compile "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
     compile "org.jetbrains.anko:anko-cardview-v7:$anko_version"
     compile "org.jetbrains.anko:anko-gridlayout-v7:$anko_version"
     compile "org.jetbrains.anko:anko-recyclerview-v7:$anko_version"
-    compile "org.jetbrains.anko:anko-design:$anko_version"
-    compile "org.jetbrains.anko:anko-percent:$anko_version"
-    compile "org.jetbrains.anko:anko-sqlite:$anko_version"
+    //compile "org.jetbrains.anko:anko-design:$anko_version"
+    //compile "org.jetbrains.anko:anko-percent:$anko_version"
+    //compile "org.jetbrains.anko:anko-sqlite:$anko_version"
+    // DBFlow
+    kapt "com.github.Raizlabs.DBFlow:dbflow-processor:$dbflow_version"
+    compile "com.github.Raizlabs.DBFlow:dbflow-core:$dbflow_version"
+    compile "com.github.Raizlabs.DBFlow:dbflow:$dbflow_version"
+    compile "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:$dbflow_version"
+    //RSS Atom feeder
     compile 'com.einmalfel:earl:1.1.0'
 }
-repositories {
-    mavenCentral()
-    maven {
-        url "https://jitpack.io"
-    }
+
+kapt {
+    generateStubs = true
 }
