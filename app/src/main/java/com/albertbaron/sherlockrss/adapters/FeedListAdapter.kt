@@ -12,8 +12,11 @@ import com.albertbaron.sherlockrss.activities.ArticleActivity
 import com.albertbaron.sherlockrss.R
 import com.albertbaron.sherlockrss.models.Article
 import com.albertbaron.sherlockrss.models.ArticleList
+import com.albertbaron.sherlockrss.models.pArticle
+import com.albertbaron.sherlockrss.models.prueba
 import java.util.*
 import org.jetbrains.anko.*
+import org.parceler.Parcels
 
 class FeedListAdapter(private val items: MutableList<ArticleList>, private val itemLayout: Int) : RecyclerView.Adapter<FeedListAdapter.ViewHolder>() {
 
@@ -34,7 +37,7 @@ class FeedListAdapter(private val items: MutableList<ArticleList>, private val i
         holder.articleList.setHasFixedSize(true);
         holder.articleList.layoutManager = LinearLayoutManager(pContext, LinearLayoutManager.HORIZONTAL, false)
         holder.articleList.itemAnimator = DefaultItemAnimator()
-        holder.itemView.tag = item
+        holder.itemView.tag = items
     }
 
     override fun getItemCount(): Int {
@@ -49,15 +52,10 @@ class FeedListAdapter(private val items: MutableList<ArticleList>, private val i
     class ClickListenerImpl : ArticleListAdapter.ClickListener {
 
         override fun onItemClick(position: Int, v: View) {
-            val item = v.tag as Article
+            val items : ArrayList<pArticle> = v.tag as ArrayList<pArticle>
             v.context.startActivity<ArticleActivity>(
-                    "FeedInfoId" to item.FeedInfoId,
-                    "Title" to item.Title,
-                    "Author" to item.Author,
-                    "Description" to item.Description,
-                    "Link" to item.Link,
-                    "ImageLink" to item.ImageLink //,
-                    //"Title" to item.publicationDate?.time
+                    "Article" to Parcels.wrap(items[position]),
+                    "Position" to position
             )
         }
 

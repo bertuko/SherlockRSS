@@ -19,8 +19,8 @@ class ArticleListAdapter(private val items: ArrayList<Article>, private val item
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
         holder.articleTitle.text = item.Title
-        holder.articleDate.text = item.publicationDate!!.toString()
-        holder.itemView.tag = item
+        holder.articleDate.text = item.Author!!.toString()
+        holder.itemView.tag = items
     }
 
     override fun getItemCount(): Int {

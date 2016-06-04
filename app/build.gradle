@@ -62,7 +62,10 @@ dependencies {
     compile "com.github.Raizlabs.DBFlow:dbflow-core:$dbflow_version"
     compile "com.github.Raizlabs.DBFlow:dbflow:$dbflow_version"
     compile "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:$dbflow_version"
-    //RSS Atom feeder
+    // Parceler
+    compile 'org.parceler:parceler-api:1.1.5'
+    kapt 'org.parceler:parceler:1.1.5'
+    // RSS Atom feeder
     compile 'com.einmalfel:earl:1.1.0'
 }
 
