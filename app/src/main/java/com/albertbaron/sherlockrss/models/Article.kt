@@ -2,48 +2,45 @@ package com.albertbaron.sherlockrss.models
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.raizlabs.android.dbflow.annotation.Column
+import com.raizlabs.android.dbflow.annotation.PrimaryKey
+import com.raizlabs.android.dbflow.annotation.Table
+import com.raizlabs.android.dbflow.structure.BaseModel
 import java.util.*
 
-data class Article (
-        val Title: String = "",
-        val Author: String = "",
-        val Description: String = "",
-        val Link: String = "",
-        val ImageLink: String = "",
-        val publicationDate: Date? = null
-) : Parcelable {
+@Table(database = MyDatabase::class)
+class Article : BaseModel {
 
-    constructor(source: Parcel): this(
-            source.readString(),
-            source.readString(),
-            source.readString(),
-            source.readString(),
-            source.readString(),
-            if (source.readLong().compareTo(0) == 0) null else Date(source.readLong())
-    )
+    constructor()
 
-    override fun describeContents(): Int {
-        return 0
+    constructor(cTitle: String,
+                cAuthor: String,
+                cDescription: String,
+                cLink: String,
+                cImageLink: String,
+                cpublicationDate: Date?) {
+        this.Title = cTitle
+        this.Author = cAuthor
+        this.Description = cDescription
+        this.Link = cLink
+        this.ImageLink = cImageLink
+        this.publicationDate = cpublicationDate
     }
 
-    override fun writeToParcel(dest: Parcel?, flags: Int) {
-        dest?.writeString(this.Title)
-        dest?.writeString(this.Author)
-        dest?.writeString(this.Description)
-        dest?.writeString(this.Link)
-        dest?.writeString(this.ImageLink)
-        dest?.writeLong(publicationDate?.time ?: 0)
-    }
+    @PrimaryKey(autoincrement = true)
+    @Column
+    var id: Long = 0
+    @Column
+    var Title: String = ""
+    @Column
+    var Author: String = ""
+    @Column
+    var Description: String = ""
+    @Column
+    var Link: String = ""
+    @Column
+    var ImageLink: String = ""
+    @Column
+    var publicationDate: Date? = null
 
-    companion object {
-        @JvmField final val CREATOR: Parcelable.Creator<Article> = object : Parcelable.Creator<Article> {
-            override fun createFromParcel(source: Parcel): Article{
-                return Article(source)
-            }
-
-            override fun newArray(size: Int): Array<Article?> {
-                return arrayOfNulls(size)
-            }
-        }
-    }
 }

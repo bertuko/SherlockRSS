@@ -57,12 +57,12 @@ class FeedHelper  {
         val al: ArrayList<Article> = ArrayList<Article>(f.items.count())
         f.items.forEach { i ->
             val a: Article = Article (
-                    Title = i.title ?: "",
-                    Author = i.author ?: "",
-                    Description = i.description ?: "",
-                    Link = i.link ?: "",
-                    ImageLink = i.imageLink ?: "",
-                    publicationDate = i.publicationDate
+                    cTitle = i.title ?: "",
+                    cAuthor = i.author ?: "",
+                    cDescription = i.description ?: "",
+                    cLink = i.link ?: "",
+                    cImageLink = i.imageLink ?: "",
+                    cpublicationDate = i.publicationDate
             )
             al.add(a)
         }
