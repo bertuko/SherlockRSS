@@ -37,19 +37,19 @@ class MainActivity : AppCompatActivity() {
         mListView.itemAnimator = DefaultItemAnimator()
     }
 
-    fun getFeedList(): ArrayList<feed> {
-        val feeds: ArrayList<feed> = ArrayList<feed>()
-        feeds.add(feed("xataka", "http://www.xataka.com/index.xml"))
-        feeds.add(feed("xatakamovil", "http://www.xatakamovil.com/index.xml"))
-        feeds.add(feed("xatakafoto", "http://www.xatakafoto.com/index.xml"))
-        feeds.add(feed("xatakandroid", "http://www.xatakandroid.com/index.xml"))
-        feeds.add(feed("xatakahome", "http://www.xatakahome.com/index.xml"))
-        feeds.add(feed("xatakawindows", "http://www.xatakawindows.com/index.xml"))
-        feeds.add(feed("xatakaciencia", "http://www.xatakaciencia.com/index.xml"))
-        feeds.add(feed("applesfera", "http://www.applesfera.com/index.xml"))
-        feeds.add(feed("vidaextra", "http://www.vidaextra.com/index.xml"))
-        feeds.add(feed("genbeta", "http://www.genbeta.com/index.xml"))
-        feeds.add(feed("genbetadev", "http://www.genbetadev.com/index.xml"))
+    fun getFeedList(): ArrayList<FeedInfo> {
+        val feeds: ArrayList<FeedInfo> = ArrayList<FeedInfo>()
+        feeds.add(FeedInfo("xataka", "http://www.xataka.com/index.xml"))
+        feeds.add(FeedInfo("xatakamovil", "http://www.xatakamovil.com/index.xml"))
+        feeds.add(FeedInfo("xatakafoto", "http://www.xatakafoto.com/index.xml"))
+        feeds.add(FeedInfo("xatakandroid", "http://www.xatakandroid.com/index.xml"))
+        feeds.add(FeedInfo("xatakahome", "http://www.xatakahome.com/index.xml"))
+        feeds.add(FeedInfo("xatakawindows", "http://www.xatakawindows.com/index.xml"))
+        feeds.add(FeedInfo("xatakaciencia", "http://www.xatakaciencia.com/index.xml"))
+        feeds.add(FeedInfo("applesfera", "http://www.applesfera.com/index.xml"))
+        feeds.add(FeedInfo("vidaextra", "http://www.vidaextra.com/index.xml"))
+        feeds.add(FeedInfo("genbeta", "http://www.genbeta.com/index.xml"))
+        feeds.add(FeedInfo("genbetadev", "http://www.genbetadev.com/index.xml"))
         return feeds
     }
 

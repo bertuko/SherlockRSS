@@ -26,7 +26,7 @@ class FeedHelper  {
         return al
     }
 
-    fun getAllFeeds(links: ArrayList<feed>): ArrayList<ArticleList> {
+    fun getAllFeeds(links: ArrayList<FeedInfo>): ArrayList<ArticleList> {
         val lArticleList : ArrayList<ArticleList> = ArrayList<ArticleList>(links.count())
         val pool = Executors.newFixedThreadPool(links.count())
         for (url in links) {

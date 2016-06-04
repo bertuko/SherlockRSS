@@ -4,7 +4,14 @@ import com.raizlabs.android.dbflow.annotation.*
 import com.raizlabs.android.dbflow.structure.BaseModel
 
 @Table(database = MyDatabase::class)
- class FeedInfo : BaseModel() {
+ class FeedInfo : BaseModel {
+
+    constructor(){}
+
+    constructor(cname: String, cfeedURL: String) {
+        this.name = cname
+        this.feedUrl = cfeedURL
+    }
 
     @PrimaryKey(autoincrement = true)
     @Column(name = "id")
