@@ -15,7 +15,7 @@ import com.albertbaron.sherlockrss.models.ArticleList
 import java.util.*
 import org.jetbrains.anko.*
 
-class FeedListAdapter(private val items: ArrayList<ArticleList>, private val itemLayout: Int) : RecyclerView.Adapter<FeedListAdapter.ViewHolder>() {
+class FeedListAdapter(private val items: MutableList<ArticleList>, private val itemLayout: Int) : RecyclerView.Adapter<FeedListAdapter.ViewHolder>() {
 
     var pContext: Context? = null
 
