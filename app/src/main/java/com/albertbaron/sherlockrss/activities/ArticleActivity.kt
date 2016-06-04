@@ -14,12 +14,13 @@ class ArticleActivity : AppCompatActivity() {
         val ui = ArticleActivityUI()
         ui.setContentView(this)
         val art: Article = Article(
-                intent.getStringExtra("Title"),
-                intent.getStringExtra("Author"),
-                intent.getStringExtra("Description"),
-                intent.getStringExtra("Link"),
-                intent.getStringExtra("ImageLink"),
-                null
+               cFeedInfoId =  0,
+               cTitle =  intent.getStringExtra("Title"),
+               cAuthor =  intent.getStringExtra("Author"),
+               cDescription =  intent.getStringExtra("Description"),
+               cLink =  intent.getStringExtra("Link"),
+               cImageLink =  intent.getStringExtra("ImageLink"),
+               cpublicationDate =  null
         )
         ui.holder!!.aTitle.text = art.Title
         val head: String = "<head><style>img,iframe{max-width: 100%; width:auto; height: auto;}</style></head>";

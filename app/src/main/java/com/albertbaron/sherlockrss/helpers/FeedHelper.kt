@@ -14,25 +14,13 @@ class FeedHelper  {
     private val poolTimeOut: Long = 10
     private val poolTimeUnit: TimeUnit = TimeUnit.SECONDS
 
-    fun getSingleFeed(link: String): ArticleList? {
-        var al: ArticleList? = null
-        val pool = Executors.newFixedThreadPool(1)
-        async(pool) {
-            val result = getFeedXML(link)
-            if (result != null) al = getFeedFromStream(result)
-        }
-        pool.shutdown()
-        pool.awaitTermination(poolTimeOut, poolTimeUnit)
-        return al
-    }
-
     fun getAllFeeds(links: ArrayList<FeedInfo>): ArrayList<ArticleList> {
         val lArticleList : ArrayList<ArticleList> = ArrayList<ArticleList>(links.count())
         val pool = Executors.newFixedThreadPool(links.count())
         for (url in links) {
             async(pool) {
                 val result = getFeedXML(url.feedUrl)
-                if (result != null) lArticleList.add(getFeedFromStream(result))
+                if (result != null) lArticleList.add(getFeedFromStream(result, url.id))
             }
         }
         pool.shutdown()
@@ -48,15 +36,16 @@ class FeedHelper  {
         return null
     }
 
-    private fun getFeedFromStream(inStr: InputStream): ArticleList {
+    private fun getFeedFromStream(inStr: InputStream, FeedInfoId: Long): ArticleList {
         val f: Feed =  EarlParser.parseOrThrow(inStr,25)
-        return processFeed(f)
+        return processFeed(f, FeedInfoId)
     }
 
-    private fun processFeed (f: Feed): ArticleList{
+    private fun processFeed (f: Feed, FeedInfoId: Long): ArticleList{
         val al: ArrayList<Article> = ArrayList<Article>(f.items.count())
         f.items.forEach { i ->
             val a: Article = Article (
+                    cFeedInfoId = FeedInfoId,
                     cTitle = i.title ?: "",
                     cAuthor = i.author ?: "",
                     cDescription = i.description ?: "",

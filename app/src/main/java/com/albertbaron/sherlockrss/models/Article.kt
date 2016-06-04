@@ -13,12 +13,14 @@ class Article : BaseModel {
 
     constructor()
 
-    constructor(cTitle: String,
+    constructor(cFeedInfoId: Long,
+                cTitle: String,
                 cAuthor: String,
                 cDescription: String,
                 cLink: String,
                 cImageLink: String,
                 cpublicationDate: Date?) {
+        this.FeedInfoId = cFeedInfoId
         this.Title = cTitle
         this.Author = cAuthor
         this.Description = cDescription
@@ -30,6 +32,8 @@ class Article : BaseModel {
     @PrimaryKey(autoincrement = true)
     @Column
     var id: Long = 0
+    @Column
+    var FeedInfoId: Long = 0
     @Column
     var Title: String = ""
     @Column

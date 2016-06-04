@@ -51,6 +51,7 @@ class FeedListAdapter(private val items: MutableList<ArticleList>, private val i
         override fun onItemClick(position: Int, v: View) {
             val item = v.tag as Article
             v.context.startActivity<ArticleActivity>(
+                    "FeedInfoId" to item.FeedInfoId,
                     "Title" to item.Title,
                     "Author" to item.Author,
                     "Description" to item.Description,
