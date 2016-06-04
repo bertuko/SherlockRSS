@@ -12,8 +12,6 @@ import com.albertbaron.sherlockrss.activities.ArticleActivity
 import com.albertbaron.sherlockrss.R
 import com.albertbaron.sherlockrss.models.Article
 import com.albertbaron.sherlockrss.models.ArticleList
-import com.albertbaron.sherlockrss.models.pArticle
-import com.albertbaron.sherlockrss.models.prueba
 import java.util.*
 import org.jetbrains.anko.*
 import org.parceler.Parcels
@@ -52,9 +50,9 @@ class FeedListAdapter(private val items: MutableList<ArticleList>, private val i
     class ClickListenerImpl : ArticleListAdapter.ClickListener {
 
         override fun onItemClick(position: Int, v: View) {
-            val items : ArrayList<pArticle> = v.tag as ArrayList<pArticle>
+            val items = v.tag as ArrayList<Article>
             v.context.startActivity<ArticleActivity>(
-                    "Article" to Parcels.wrap(items[position]),
+                    "Article" to Parcels.wrap(items),
                     "Position" to position
             )
         }
