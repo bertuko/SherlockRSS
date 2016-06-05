@@ -14,7 +14,7 @@ class FeedHelper  {
     private val poolTimeOut: Long = 10
     private val poolTimeUnit: TimeUnit = TimeUnit.SECONDS
 
-    fun getAllFeeds(links: ArrayList<FeedInfo>): ArrayList<ArticleList> {
+    fun getAllFeeds(links: ArrayList<FeedInfo>): List<ArticleList> {
         val lArticleList : ArrayList<ArticleList> = ArrayList<ArticleList>(links.count())
         val pool = Executors.newFixedThreadPool(links.count())
         for (url in links) {
@@ -25,7 +25,8 @@ class FeedHelper  {
         }
         pool.shutdown()
         pool.awaitTermination(poolTimeOut, poolTimeUnit)
-        return lArticleList
+        val asd : List<ArticleList> = lArticleList.sortedBy { i -> i.FeedInfoId }
+        return asd
     }
 
     private fun getFeedXML(link: String): InputStream? {
@@ -57,6 +58,7 @@ class FeedHelper  {
         }
 
         val artList: ArticleList = ArticleList(
+                FeedInfoId,
                 f.title,
                 f.author ?: "",
                 f.description ?: "",

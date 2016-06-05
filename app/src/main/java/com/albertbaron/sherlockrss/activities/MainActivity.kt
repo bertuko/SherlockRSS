@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         fillMainActivity(f.getAllFeeds(getFeedList()))
     }
 
-    fun fillMainActivity (al: ArrayList<ArticleList>) {
+    fun fillMainActivity (al: List<ArticleList>) {
         //longToast("feeds updated")
         //val mListView: RecyclerView = ui.holder!!.feedView
         val mListView: RecyclerView =  findViewById(R.id.feedList) as RecyclerView

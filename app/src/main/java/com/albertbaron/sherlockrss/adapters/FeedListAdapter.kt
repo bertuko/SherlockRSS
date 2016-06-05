@@ -8,15 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.albertbaron.sherlockrss.activities.ArticleActivity
 import com.albertbaron.sherlockrss.R
+import com.albertbaron.sherlockrss.activities.ArticleActivity
 import com.albertbaron.sherlockrss.models.Article
 import com.albertbaron.sherlockrss.models.ArticleList
 import java.util.*
 import org.jetbrains.anko.*
 import org.parceler.Parcels
 
-class FeedListAdapter(private val items: MutableList<ArticleList>, private val itemLayout: Int) : RecyclerView.Adapter<FeedListAdapter.ViewHolder>() {
+class FeedListAdapter(private val items: List<ArticleList>, private val itemLayout: Int) : RecyclerView.Adapter<FeedListAdapter.ViewHolder>() {
 
     var pContext: Context? = null
 
