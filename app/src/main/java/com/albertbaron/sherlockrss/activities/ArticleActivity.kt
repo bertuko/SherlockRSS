@@ -12,12 +12,12 @@ import android.support.v4.app.FragmentStatePagerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.albertbaron.sherlockrss.R
 import com.albertbaron.sherlockrss.layouts.ArticleActivityUI
 import com.albertbaron.sherlockrss.models.Article
 import org.jetbrains.anko.*
 import org.jetbrains.anko.support.v4.UI
 import org.parceler.Parcels
+import java.util.*
 
 class ArticleActivity : AppCompatActivity() {
 
@@ -31,9 +31,6 @@ class ArticleActivity : AppCompatActivity() {
      */
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
 
-    /**
-     * The [ViewPager] that will host the section contents.
-     */
     private var mViewPager: ViewPager? = null
     private var artList: MutableList<Article>? = null
 
@@ -42,7 +39,6 @@ class ArticleActivity : AppCompatActivity() {
 
         val ui = ArticleActivityUI()
         ui.setContentView(this)
-        //setContentView(R.layout.activity_tab_article)
 
         val position: Int = intent.getIntExtra("Position", 0)
         artList = Parcels.unwrap<MutableList<Article>>(intent.getParcelableExtra<Parcelable>("Article"))
@@ -53,7 +49,6 @@ class ArticleActivity : AppCompatActivity() {
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = ui.holder!!.aContainer
-        //mViewPager = findViewById(R.id.container) as ViewPager?
         mViewPager!!.adapter = mSectionsPagerAdapter
         mViewPager!!.currentItem = position
     }
@@ -62,9 +57,9 @@ class ArticleActivity : AppCompatActivity() {
 
         override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                                   savedInstanceState: Bundle?): View? {
-            val pos: Int = arguments.getInt(ARG_SECTION_NUMBER)
+            val pos: ArrayList<Int> = arguments.getIntegerArrayList(ARG_SECTION_NUMBER)
             val parentAct = activity as ArticleActivity
-            val art: Article = parentAct.artList!![pos]
+            val art: Article = parentAct.artList!![pos[0]]
 
             return UI {
                 verticalLayout {
@@ -95,7 +90,7 @@ class ArticleActivity : AppCompatActivity() {
             fun newInstance(sectionNumber: Int): PlaceholderFragment {
                 val fragment = PlaceholderFragment()
                 val args = Bundle()
-                args.putInt(ARG_SECTION_NUMBER, sectionNumber)
+                args.putIntegerArrayList(ARG_SECTION_NUMBER, arrayListOf(sectionNumber))
                 fragment.arguments = args
                 return fragment
             }
