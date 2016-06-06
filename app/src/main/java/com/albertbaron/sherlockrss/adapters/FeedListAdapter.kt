@@ -29,7 +29,7 @@ class FeedListAdapter(private val items: List<ArticleList>, private val itemLayo
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
         holder.feedTitle.text = item.Title
-        val adapt: ArticleListAdapter = ArticleListAdapter(item.Articles, R.layout.article_list)
+        val adapt: ArticleListAdapter = ArticleListAdapter(item.Articles)
         adapt.setOnItemClickListener(ClickListenerImpl())
         holder.articleList.adapter = adapt
         holder.articleList.setHasFixedSize(true);
@@ -58,8 +58,7 @@ class FeedListAdapter(private val items: List<ArticleList>, private val itemLayo
         }
 
         override fun onItemLongClick(position: Int, v: View) {
-            //val item = v.tag as Article
-            //v.context.startActivity<ArticleActivity>("Article" to item)
+            //v.context.longToast("Long click")
         }
     }
 
