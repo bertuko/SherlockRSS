@@ -20,17 +20,10 @@ import org.jetbrains.anko.*
 import org.jetbrains.anko.support.v4.UI
 import org.parceler.Parcels
 import java.util.*
+import android.view.MenuItem
 
 class ArticleActivity : AppCompatActivity() {
 
-    /**
-     * The [android.support.v4.view.PagerAdapter] that will provide
-     * fragments for each of the sections. We use a
-     * [FragmentPagerAdapter] derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * [android.support.v4.app.FragmentStatePagerAdapter].
-     */
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
 
     private var mViewPager: ViewPager? = null
@@ -42,17 +35,27 @@ class ArticleActivity : AppCompatActivity() {
         val ui = ArticleActivityUI()
         ui.setContentView(this)
 
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setDisplayShowHomeEnabled(true)
+
         val position: Int = intent.getIntExtra("Position", 0)
         artList = Parcels.unwrap<MutableList<Article>>(intent.getParcelableExtra<Parcelable>("Article"))
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
         mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
 
-        // Set up the ViewPager with the sections adapter.
         mViewPager = ui.holder!!.aContainer
         mViewPager!!.adapter = mSectionsPagerAdapter
         mViewPager!!.currentItem = position
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     class PlaceholderFragment : Fragment() {
